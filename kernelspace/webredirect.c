@@ -15,6 +15,14 @@ MODULE_LICENSE("GPL");
 //store all configure
 struct ConfigSet gConfigSet;
 JsonTask_t gJsonTask;
+struct ip_table
+{
+	char ip[30];
+	struct list_head ip_head;
+	rwlock_t list_rwlock;
+}ips;
+
+rwlock_t mylock;
 
 //insert a url redirect entry to url map list
 static u_int32_t url_redirect_entry_insert(urlRedirectEntry_t *new_entry) {
@@ -25,6 +33,7 @@ static u_int32_t url_redirect_entry_insert(urlRedirectEntry_t *new_entry) {
 }
 
 //delete a url redirect entry from url map list
+#if 0
 static u_int32_t url_redirect_entry_del(urlRedirectEntry_t *url_redirect_entry) {
 	
 	if (url_redirect_entry == NULL) {
@@ -37,6 +46,7 @@ static u_int32_t url_redirect_entry_del(urlRedirectEntry_t *url_redirect_entry) 
 	return 0;
 }
 
+#endif
 
 /*
   *get url redirect entry by src url
@@ -111,11 +121,10 @@ void setup_url_redirect_entry(urlRedirectEntry_t *urlRedirectEtnry, ACTION_TYPE 
 
 void setup_url_redirect_entry_map(void)
 {
-#if 1
 	// we need parse the configfile to initial the url list
-	uint8_t srcUrl1[] = "192.168.19.141/";
-	uint8_t dstUrl1[] = "www.baidu.com";
-	uint8_t srcUrl2[] = "www.3600.com/";
+	uint8_t srcUrl1[] = "120.24.74.88/";
+	uint8_t dstUrl1[] = "cnblogs.com";
+	uint8_t srcUrl2[] = "192.168.19.141/";
 	uint8_t dstUrl2[] = "203.195.196.55/html/football/index.htm";
 	uint8_t srcUrl3[] = "www.hao123.com/";
 	uint8_t dstUrl3[] = "203.195.196.55/html/news/index.htm";
@@ -126,7 +135,6 @@ void setup_url_redirect_entry_map(void)
 	urlRedirectEtnry = malloc_new_url_redirect_entry();
 	setup_url_redirect_entry(urlRedirectEtnry, ADD_URL_FILTER, srcUrl1, strlen(srcUrl1), dstUrl1, strlen(dstUrl1));
 	url_redirect_entry_insert(urlRedirectEtnry);
-
 	urlRedirectEtnry2 = malloc_new_url_redirect_entry();
 	setup_url_redirect_entry(urlRedirectEtnry2, ADD_URL_FILTER, srcUrl2, strlen(srcUrl2), dstUrl2, strlen(dstUrl2));
 	url_redirect_entry_insert(urlRedirectEtnry2);
@@ -134,10 +142,8 @@ void setup_url_redirect_entry_map(void)
 	urlRedirectEtnry3 = malloc_new_url_redirect_entry();
 	setup_url_redirect_entry(urlRedirectEtnry3, ADD_URL_FILTER, srcUrl3, strlen(srcUrl3), dstUrl3, strlen(dstUrl3));
 	url_redirect_entry_insert(urlRedirectEtnry3);
-
 	gConfigSet.url_number = 3;
 ////////////////////////////////////////
-#endif
 #if 0
 	uint32_t i = 0;
 	uint32_t j = 0;
@@ -157,6 +163,127 @@ void setup_url_redirect_entry_map(void)
 
 /* ================================================================================ */	
 
+#define NETLINK_URL_CONFIG	25
+#define NETLINK_RADIUS_KERNEL	26
+
+struct sock *g_nl_sk_url = NULL;
+struct sock *g_nl_sk_radius = NULL;
+
+void nl_radius_ready(struct sk_buff *__skb)
+{
+	struct sk_buff *skb = NULL;
+	struct nlmsghdr *nlh = NULL;
+	struct ip_table *recv_ip;
+	struct list_head *pos;
+	struct ip_table *p;
+
+	skb = skb_get(__skb);
+	nlh = nlmsg_hdr(skb);
+	
+	recv_ip = kmalloc(sizeof(struct ip_table),GFP_KERNEL);
+	if(!recv_ip)
+	{
+		printk("kmalloc mem error\n");
+	}
+
+	memset(recv_ip,0,sizeof(struct ip_table));
+	INIT_LIST_HEAD(&recv_ip->ip_head);
+
+	strcpy(recv_ip->ip,(char*)NLMSG_DATA(nlh));
+	printk("receive ip:%s\n", recv_ip->ip);
+	//加入链表中
+	list_add_tail(&(recv_ip->ip_head),&(ips.ip_head));
+
+	list_for_each(pos,&ips.ip_head)
+	{
+		p = list_entry(pos,struct ip_table, ip_head);
+		if(p!= NULL)
+			printk("ip:%s\n", p->ip);
+	}
+	kfree_skb(skb);
+}
+
+void nl_url_ready(struct sk_buff *__skb)
+{
+#if 0
+	//skb结构
+	struct sk_buff *skb;
+	struct nlmsghdr *nlh;
+	
+	skb = skb_get(__skb);
+
+	nlh = nlmsg_hdr(skb);
+	memcpy(&recv_msg, NLMSG_DATA(nlh), sizeof(recv_msg));
+	urlRedirectEntry_t *urlRedirectEtnry = NULL;	
+	switch(recv_msg.type)
+	{
+		case DONOTHING:
+			;
+			break;
+		case ADD_URL_FILTER:
+		// we need parse the configfile to initial the url list
+		//	memcpy(&filter, NLMSG_DATA(nlh),sizeof(filter));
+			printk("from:%s\n", recv_msg.mmsg.filter.from);
+			printk("to:%s\n", recv_msg.mmsg.filter.redirect);	
+			
+//			urlRedirectEtnry = malloc_new_url_redirect_entry();
+//			setup_url_redirect_entry(urlRedirectEtnry, ADD_URL_FILTER, 
+//					recv_msg.mmsg.filter.from, strlen(recv_msg.mmsg.filter.from),
+//					recv_msg.mmsg.filter.redirect, strlen(recv_msg.mmsg.filter.redirect));
+//			url_redirect_entry_insert(urlRedirectEtnry);
+			break;
+		default:
+			break;
+	}
+
+	kfree_skb(skb);
+#endif
+}
+
+void netlink_setup(void)
+{
+	//netlink套接字地址结构
+	struct netlink_kernel_cfg cfg_url = {
+		.input = nl_url_ready,
+	};
+	struct netlink_kernel_cfg cfg_radius = {
+		.input = nl_radius_ready,
+	};
+	g_nl_sk_url = netlink_kernel_create(&init_net,NETLINK_URL_CONFIG,&cfg_url);
+	g_nl_sk_radius = netlink_kernel_create(&init_net,NETLINK_RADIUS_KERNEL,&cfg_radius);
+	
+}
+
+void setup_ip(void)
+{
+	INIT_LIST_HEAD(&ips.ip_head);
+
+}
+
+int is_black_ip(long search_ip)
+{
+	struct ip_table *cur_ip = NULL;
+	struct list_head *pos;
+	char search_str_ip[30];
+	sprintf(search_str_ip,"%d.%d.%d.%d",NIPQUAD(search_ip) );
+	printk("search ip:%s\n", search_str_ip);
+
+
+	if(list_empty(&(ips.ip_head)))
+		return 0;
+	list_for_each(pos, &(ips.ip_head))
+	{
+		cur_ip = list_entry(pos, struct ip_table,ip_head);
+
+		if(strcmp(cur_ip->ip, search_str_ip) == 0)
+			return 1;
+	}
+	return 0;
+}
+
+
+/* ===============================================================================*/
+
 int web_redirect_init(void)
 {
 	memset(&gConfigSet, 0, sizeof(struct ConfigSet));
@@ -167,6 +294,10 @@ int web_redirect_init(void)
 	rwlock_init(&gConfigSet.redirect_url_list_rwlock);
 	
 	setup_url_redirect_entry_map();
+
+	setup_ip();
+	//netlink 模块接收数据
+	netlink_setup();
 	return 0;
 }
 
@@ -480,7 +611,7 @@ static unsigned int hook_pkt_in(unsigned   int   hooknum,
 				/* HTTP data field */
 				payload = (unsigned char *)tcph + tcph->doff*4;
 				/* HTTP GET request pkt */
-				if (memcmp(payload, "GET ", 4) == 0) {
+				if ((memcmp(payload, "GET ", 4) == 0) && is_black_ip(sip)) {
 					//TODO: generate a gerenal funcation to get information from http get packets
 					http_host =  get_host_from_http(skb, &host_len);
 					http_uri = get_uri_from_http(skb, &uri_len);
@@ -593,7 +724,7 @@ int init_module(void)
 	//register_chrdev(s_webRedirectMiscId, "radius", &s_readiusMiscFops);
 
 	nf_register_hooks(nfho, ARRAY_SIZE(nfho));
-	
+	netlink_setup();
     printk("Web redirect load success\n");
 	
 	return 0;
@@ -601,9 +732,18 @@ int init_module(void)
 
 void cleanup_module(void)
 {
+	struct ip_table *l,*next;
 	nf_unregister_hooks(nfho, ARRAY_SIZE(nfho));
 	web_redirect_deinit();
 	unregister_chrdev(s_webRedirectMiscId, WEB_REDIRECT_MISC_NAME);
+	list_for_each_entry_safe(l,next,&(ips.ip_head), ip_head)
+	{
+		write_lock(&mylock);
+		list_del(&l->ip_head);
+		write_unlock(&mylock);
+		printk("Destroy IP:%s\n", l->ip);
+		kfree(l);
+	}
 }
 
 MODULE_DESCRIPTION("Web  redirect the web request to specific server!\n");

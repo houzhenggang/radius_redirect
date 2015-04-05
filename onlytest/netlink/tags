@@ -1,0 +1,34 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+KERNELBUILD	Makefile	/^	KERNELBUILD :=\/lib\/modules\/$(shell uname -r)\/build  $/;"	m
+MAX_PAYLOAD	user.c	20;"	d	file:
+NETLINK_RADIUS	nlkernel.c	18;"	d	file:
+NETLINK_RADIUS	user.c	18;"	d	file:
+NETLINK_RADIUS_KERNEL	user.c	19;"	d	file:
+__this_module	nlkernel.mod.c	/^struct module __this_module$/;"	v	typeref:struct:module
+__used	nlkernel.mod.c	/^__used$/;"	v	file:
+__used	nlkernel.mod.c	/^__used$/;"	v	typeref:struct:____versions	file:
+cleanup_module	nlkernel.c	/^void cleanup_module()$/;"	f
+g_nl_sk	nlkernel.c	/^struct sock *g_nl_sk = NULL;$/;"	v	typeref:struct:sock
+init_module	nlkernel.c	/^int init_module()$/;"	f
+init_nl	user.c	/^void init_nl()$/;"	f
+iov	user.c	/^struct iovec iov;$/;"	v	typeref:struct:iovec
+ip	nlkernel.c	/^	char ip[30];$/;"	m	struct:mylist	file:	access:public
+ip_list	nlkernel.c	/^	struct list_head ip_list;$/;"	m	struct:mylist	typeref:struct:mylist::list_head	file:	access:public
+main	user.c	/^int main(int argc, char **argv)$/;"	f	signature:(int argc, char **argv)
+msg	nlkernel.c	/^}msg;$/;"	v	typeref:struct:mylist
+mylist	nlkernel.c	/^struct mylist$/;"	s	file:
+mylist::ip	nlkernel.c	/^	char ip[30];$/;"	m	struct:mylist	file:	access:public
+mylist::ip_list	nlkernel.c	/^	struct list_head ip_list;$/;"	m	struct:mylist	typeref:struct:mylist::list_head	file:	access:public
+nl_dest_addr	user.c	/^struct sockaddr_nl nl_src_addr, nl_dest_addr;$/;"	v	typeref:struct:
+nl_fd	user.c	/^int nl_fd;$/;"	v
+nl_msg	user.c	/^struct msghdr nl_msg;$/;"	v	typeref:struct:msghdr
+nl_ready	nlkernel.c	/^void nl_ready(struct sk_buff *__skb)$/;"	f	signature:(struct sk_buff *__skb)
+nl_src_addr	user.c	/^struct sockaddr_nl nl_src_addr, nl_dest_addr;$/;"	v	typeref:struct:sockaddr_nl
+nlh	user.c	/^struct nlmsghdr *nlh = NULL;$/;"	v	typeref:struct:nlmsghdr
+obj-m	Makefile	/^obj-m := nlkernel.o  $/;"	m
+sendnlmsg	user.c	/^void sendnlmsg(char *message)$/;"	f	signature:(char *message)

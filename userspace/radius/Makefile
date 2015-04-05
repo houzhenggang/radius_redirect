@@ -16,7 +16,6 @@ $(TARGET): clean $(OBJS)
 	
 obj/%.o:%.c
 	@mkdir -p obj
-	$(CC) $(CFLAGS) $(SOURCE) -c $< -o $@
-
+	$(CC) -c $< -o $@
 clean:	
 	rm -fr obj $(OBJS) $(TARGET)

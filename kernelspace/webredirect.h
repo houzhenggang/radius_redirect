@@ -92,9 +92,11 @@ int web_build_url(const char *szUrl, WebData_t *pData);
 
 typedef enum 
 {
-    DONOTHING,
-    ADD_URL_FILTER,
-    REMOVE_URL_FILTER
+	ADD_IP,		//增加过滤IP
+    DONOTHING,		//什么也不做
+    ADD_URL_FILTER,			//添加过滤
+    REMOVE_URL_FILTER			//删除URL过滤
+
 } ACTION_TYPE;
 
 //typedef struct WebPatriotData_t

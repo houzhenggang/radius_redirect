@@ -29,20 +29,24 @@ __attribute__((section("__versions"))) = {
 	{ 0x5152e605, __VMLINUX_SYMBOL_STR(memcmp) },
 	{ 0x349cba85, __VMLINUX_SYMBOL_STR(strchr) },
 	{ 0x1e6d26a8, __VMLINUX_SYMBOL_STR(strstr) },
-	{ 0x92dbf14, __VMLINUX_SYMBOL_STR(kfree_skb) },
-	{ 0x91715312, __VMLINUX_SYMBOL_STR(sprintf) },
 	{ 0xa93ce01a, __VMLINUX_SYMBOL_STR(dev_queue_xmit) },
 	{ 0x7d50a24, __VMLINUX_SYMBOL_STR(csum_partial) },
 	{ 0xd86e8c28, __VMLINUX_SYMBOL_STR(__alloc_skb) },
 	{ 0xf5609e02, __VMLINUX_SYMBOL_STR(skb_push) },
 	{ 0x362ef408, __VMLINUX_SYMBOL_STR(_copy_from_user) },
-	{ 0xf0fdf6cb, __VMLINUX_SYMBOL_STR(__stack_chk_fail) },
 	{ 0xd0d8621b, __VMLINUX_SYMBOL_STR(strlen) },
-	{ 0x50eedeb8, __VMLINUX_SYMBOL_STR(printk) },
 	{ 0x2e60bace, __VMLINUX_SYMBOL_STR(memcpy) },
 	{ 0x12da5bb2, __VMLINUX_SYMBOL_STR(__kmalloc) },
 	{ 0xb81960ca, __VMLINUX_SYMBOL_STR(snprintf) },
 	{ 0x37a0cba, __VMLINUX_SYMBOL_STR(kfree) },
+	{ 0xf0fdf6cb, __VMLINUX_SYMBOL_STR(__stack_chk_fail) },
+	{ 0xe2d5255a, __VMLINUX_SYMBOL_STR(strcmp) },
+	{ 0x91715312, __VMLINUX_SYMBOL_STR(sprintf) },
+	{ 0x6ee8d721, __VMLINUX_SYMBOL_STR(__netlink_kernel_create) },
+	{ 0xe8efc5e1, __VMLINUX_SYMBOL_STR(init_net) },
+	{ 0x92dbf14, __VMLINUX_SYMBOL_STR(kfree_skb) },
+	{ 0x50eedeb8, __VMLINUX_SYMBOL_STR(printk) },
+	{ 0xe914e41e, __VMLINUX_SYMBOL_STR(strcpy) },
 	{ 0xba966047, __VMLINUX_SYMBOL_STR(kmem_cache_alloc_trace) },
 	{ 0x43a69ab4, __VMLINUX_SYMBOL_STR(kmalloc_caches) },
 	{ 0x7f658e80, __VMLINUX_SYMBOL_STR(_raw_write_lock) },
@@ -55,4 +59,4 @@ __attribute__((section(".modinfo"))) =
 "depends=";
 
 
-MODULE_INFO(srcversion, "8867CAEE0248D1BCC9D6B8D");
+MODULE_INFO(srcversion, "FA86A01EFD434CD3095A2EE");

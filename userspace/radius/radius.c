@@ -1,10 +1,8 @@
 
 /*
- * radius协议解析
+ * 主模块:radius协议解析
  *
  * */
-
-#define _DEBUG_
 
 #include<stdio.h>
 #include <stdlib.h>
@@ -38,6 +36,9 @@
 /* 以太帧头最大值 */
 #define MAX_ETH_FRAME 1514  
 
+#define T_ADD_ID	1
+#define T_REMOVE_ID	2
+
 //radius协议信息
 struct radiushdr
 {
@@ -56,6 +57,7 @@ struct radiushdr
 /* 黑名单ID表 */
 struct id_table
 {
+
 	char id[20];
 	//其他信息
 }id;
@@ -63,7 +65,10 @@ struct id_table
 /* 发送给内核的包含黑名单id对应的ip */
 struct 
 {
-	char mtext[30];
+	/* 操作类型 */
+	int o_type;
+	/* 操作ID */
+	char id[30];
 }msg;
 /* 读取到的数据大小 */
 int readSize;
@@ -141,6 +146,7 @@ void parse_radius()
 		len = (unsigned char)buff[i+1];
 		if(len == 0)
 			break;
+		//根据RFC，类型是1的是用户名
 		if(att_type == 1)
 		{
 			//提取username
@@ -149,6 +155,7 @@ void parse_radius()
 				sprintf(username, "%s%u",username, (unsigned char)buff[i+2+j]-48);
 			username[strlen(username)] = 0;
 		}
+		//根据RFC，类型是8的是framp ip
 		else if(att_type == 8)
 		{
 			sprintf(send_ip, "%u.", (unsigned char)buff[i+2]);
@@ -160,8 +167,15 @@ void parse_radius()
 		i = i + len;
 	}
 }
-/* 从链表中查找出来即可，如果查到，则发送到重定向程序 */
-int is_black_table()
+
+/*
+ * 函数名:is_black_table
+ * 参数:void
+ * 说明:判断是否是黑名单
+ * 原理：黑名单存储在id_list链表中，从链表中查找用户名是否存在
+ *
+ * */
+int is_black_table(void)
 {
 	int i = 0; 
 	struct slist *pos;
@@ -182,7 +196,13 @@ int is_black_table()
 /* 最大负载 */
 #define MAX_PAYLOAD 512	
 
-/* 发送给重定向程序IP */
+/*
+ * 函数名:send_redirect
+ * 参数:要发送的IP地址
+ * 说明:采用netlink的方式与内核进行通信
+ *
+ * */
+
 int send_redirect(char *ip)
 {
 
@@ -196,8 +216,6 @@ int send_redirect(char *ip)
 	int nl_fd;
 	//消息体
 	struct msghdr nl_msg;
-	////////////////////////////////////////////
-	//
 	nl_fd = socket(PF_NETLINK, SOCK_RAW, NETLINK_RADIUS_KERNEL);
 	if(nl_fd<0)
 	{
@@ -248,11 +266,17 @@ int send_redirect(char *ip)
 //<<===========================================================<<
 //以下为负责与黑名单id配置相关的操作
 
-//消息队列服务器端，负责获取消息存入链表并写入文件
+/*
+ * 函数名:msg_server
+ * 参数:void
+ * 说明:消息队列的服务器端，也是线程的回调函数
+ *
+ * */
+
 void msg_server( )
 {
 	int msgqid, i = 0,j = 0;
-	FILE *f = fopen(BLACK_TABLE,"a+");
+	FILE *f = fopen(BLACK_TABLE,"rw");
 	if(f == NULL)
 	{
 		perror("fopen");
@@ -263,11 +287,17 @@ void msg_server( )
 	do 
         {
 		msgrcv(msgqid,&msg,1030,0,0);   /*接收消息*/
-		strcpy(id.id, msg.mtext);			
-		printf("将用户:%s加入黑名单\n", id.id);
-		slist_add_head(id_list, &id, sizeof(id));
-		fprintf(f,"%s\n",id.id);
-		fflush(f);
+		strcpy(id.id, msg.id);
+		if(msg.o_type == T_ADD_ID)
+		{
+			printf("将用户:%s加入黑名单\n", id.id);
+			slist_add_head(id_list, &id, sizeof(id));
+		}
+		else if(msg.o_type == T_REMOVE_ID)
+		{
+			//删除链表数据
+			slist_remove(id_list, &id, sizeof(id));
+		}
 
 		printf("现有黑名单ID:\n");
 		printf("--------------------------------------------\n");
@@ -277,10 +307,13 @@ void msg_server( )
 		{
 			temp = (struct id_table*)(pos->data);
 			printf("ID:%s\n",temp->id );
+			fprintf(f,"%s\n", temp->id);
+			fflush(f);
 		}
 		printf("--------------------------------------------\n");
 
 	}while(1);
+
 	fclose(f);
 
 	msgctl(msgqid,IPC_RMID,0);  /*删除消息队列，归还资源*/
@@ -326,6 +359,7 @@ int main (int argc, const char * argv[])
 	fclose(black);
 
 	printf("根据记录，当前黑名单列表如下\n");
+	printf("+-----------------------------------+\n");
 	struct slist *pos;
 	slist_travel(pos,id_list)
 	{
