@@ -1,4 +1,4 @@
-obj-m := nlkernel.o  
+obj-m := nlstr.o  
 	KERNELBUILD :=/lib/modules/$(shell uname -r)/build  
 default:  
 	make -C $(KERNELBUILD) M=$(shell pwd) modules  

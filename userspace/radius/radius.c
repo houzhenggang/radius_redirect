@@ -203,12 +203,12 @@ int is_black_table(void)
  *
  * */
 
-int send_redirect(char *ip)
+int send_redirect(char type,char *id,char *ip)
 {
 
 	//通信地址结构
 	struct sockaddr_nl nl_src_addr, nl_dest_addr;
-
+	char str[100];
 	//消息报头
 	struct nlmsghdr *nlh = NULL;
 	//IO
@@ -228,12 +228,13 @@ int send_redirect(char *ip)
 	nl_src_addr.nl_family = AF_NETLINK;
 	nl_src_addr.nl_pid = getpid();
 	nl_src_addr.nl_groups = 0;
-
+#if 0
 	if(bind(nl_fd,(struct sockaddr*)&nl_src_addr, sizeof(nl_src_addr))<0)
 	{
 		perror("bind");
 		return 0;
 	}
+#endif
 
 	memset(&nl_dest_addr, 0, sizeof(nl_dest_addr));
 	nl_dest_addr.nl_family = AF_NETLINK;
@@ -244,7 +245,8 @@ int send_redirect(char *ip)
 	nlh->nlmsg_pid = getpid();
 	nlh->nlmsg_flags = 0;
 	
-	strcpy((char*)NLMSG_DATA(nlh), ip);
+	sprintf(str, "%c:%s:%s", type, id, ip);
+	strcpy((char*)NLMSG_DATA(nlh), str);
 	
 	iov.iov_base = (void*)nlh;
 	iov.iov_len = nlh->nlmsg_len;
@@ -253,12 +255,15 @@ int send_redirect(char *ip)
 	nl_msg.msg_iov = &iov;
 	nl_msg.msg_iovlen = 1;
 
-	printf("Start to send message.\n");
+	printf("开始发送信息%s.\n", str);
+
 	if(sendmsg(nl_fd, &nl_msg, 0)<0)
 	{
 		perror("sendmsg");
 		return 0;
 	}
+	close(nl_fd);
+
 	return 1;
 
 }
@@ -288,19 +293,26 @@ void msg_server( )
         {
 		msgrcv(msgqid,&msg,1030,0,0);   /*接收消息*/
 		strcpy(id.id, msg.id);
+		id.id[strlen(id.id)] = 0;
 		if(msg.o_type == T_ADD_ID)
 		{
+			printf("收到控制端的添加黑名单命令\n");
 			printf("将用户:%s加入黑名单\n", id.id);
 			slist_add_head(id_list, &id, sizeof(id));
 		}
 		else if(msg.o_type == T_REMOVE_ID)
 		{
+			printf("收到控制端的删除黑名单命令\n");
+			printf("将用户%s从黑名单删除\n", id.id);
 			//删除链表数据
 			slist_remove(id_list, &id, sizeof(id));
+			printf("告诉内核删除与%s相关的id到ip的映射关系\n", id.id);
+			//告诉内核删哪个id
+			send_redirect('d', id.id,"NULL");
 		}
 
 		printf("现有黑名单ID:\n");
-		printf("--------------------------------------------\n");
+		printf("+-----------------+---------------------------+\n");
 		struct slist *pos;
 		struct id_table *temp;
 		slist_travel(pos, id_list)
@@ -310,7 +322,7 @@ void msg_server( )
 			fprintf(f,"%s\n", temp->id);
 			fflush(f);
 		}
-		printf("--------------------------------------------\n");
+		printf("+----------------+----------------------------+\n");
 
 	}while(1);
 
@@ -420,15 +432,15 @@ int main (int argc, const char * argv[])
 					{
 						fprintf(stdout, "黑名单,发送IP：%s 给重定向程序\n",send_ip);
 						fprintf(stdout,"发送IP部分采用netlink方法\n");
-						if(send_redirect(send_ip))
+						if(send_redirect('a', username, send_ip))
 						{
-							fprintf(stdout,"发送给内核重定向成功\n");
+							fprintf(stdout,"发送给内核重定向程序\n");
 						}
 						else
 							fprintf(stderr,"发送失败\n");
 					}
 					else
-						fprintf(stdout, "not black_table\n");
+						fprintf(stdout, "不是黑名单\n");
 				}
 				printf("是tcp协议，来个端口测试抓包是否正确:source:%d\n", ntohs(tcp->source));
 			}

@@ -1,0 +1,228 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ACTION_TYPE	webredirect.h	/^} ACTION_TYPE;$/;"	t	typeref:enum:__anon1
+ADD_IP	webredirect.h	/^	ADD_IP,		\/\/澧炲姞杩囨护IP$/;"	e	enum:__anon1
+ADD_URL_FILTER	webredirect.h	/^    ADD_URL_FILTER,			\/\/娣诲姞杩囨护$/;"	e	enum:__anon1
+BUFSIZE	net.c	17;"	d	file:
+ConfigSet	webredirect.h	/^struct ConfigSet $/;"	s
+ConfigSet::check_interval	webredirect.h	/^    int32_t check_interval;$/;"	m	struct:ConfigSet	access:public
+ConfigSet::redirect_url_list_head	webredirect.h	/^    struct list_head redirect_url_list_head;$/;"	m	struct:ConfigSet	typeref:struct:ConfigSet::list_head	access:public
+ConfigSet::redirect_url_list_rwlock	webredirect.h	/^	rwlock_t redirect_url_list_rwlock;$/;"	m	struct:ConfigSet	access:public
+ConfigSet::url_number	webredirect.h	/^    int32_t url_number;$/;"	m	struct:ConfigSet	access:public
+DEFAULT_REDIRECT_URL	webredirect.h	15;"	d
+DONOTHING	webredirect.h	/^    DONOTHING,		\/\/浠�涔堜篃涓嶅仛$/;"	e	enum:__anon1
+IP_HEAD_LEN	webredirect.h	13;"	d
+IP_VERSION_4	webredirect.h	10;"	d
+IP_VERSION_6	webredirect.h	11;"	d
+JsonPlans_t	json_parser.h	/^typedef struct JsonPlans_t$/;"	s
+JsonPlans_t	json_parser.h	/^} JsonPlans_t;$/;"	t	typeref:struct:JsonPlans_t
+JsonPlans_t::end	json_parser.h	/^	uint32_t end;$/;"	m	struct:JsonPlans_t	access:public
+JsonPlans_t::pid	json_parser.h	/^	uint32_t pid;$/;"	m	struct:JsonPlans_t	access:public
+JsonPlans_t::pro	json_parser.h	/^	uint32_t pro;$/;"	m	struct:JsonPlans_t	access:public
+JsonPlans_t::targetList	json_parser.h	/^	JsonTargetList_t  targetList[MAX_TASK_LIST];$/;"	m	struct:JsonPlans_t	access:public
+JsonPlans_t::ulWeight	json_parser.h	/^	uint32_t ulWeight;$/;"	m	struct:JsonPlans_t	access:public
+JsonTargetList	json_parser.h	/^	JsonTargetList_t JsonTargetList[MAX_TASK_LIST];$/;"	m	struct:JsonTaskData_t	access:public
+JsonTargetList_t	json_parser.h	/^typedef struct JsonTargetList_t$/;"	s
+JsonTargetList_t	json_parser.h	/^} JsonTargetList_t;$/;"	t	typeref:struct:JsonTargetList_t
+JsonTargetList_t::cookie	json_parser.h	/^	char cookie[MAX_COOKIE_SIZE];$/;"	m	struct:JsonTargetList_t	access:public
+JsonTargetList_t::ulEnd	json_parser.h	/^	uint32_t ulEnd;$/;"	m	struct:JsonTargetList_t	access:public
+JsonTargetList_t::ulStart	json_parser.h	/^	uint32_t ulStart;$/;"	m	struct:JsonTargetList_t	access:public
+JsonTargetList_t::ulTid	json_parser.h	/^	uint32_t ulTid;$/;"	m	struct:JsonTargetList_t	access:public
+JsonTargetList_t::ulWeight	json_parser.h	/^	uint32_t ulWeight;$/;"	m	struct:JsonTargetList_t	access:public
+JsonTargetList_t::url	json_parser.h	/^	char url[MAX_URL_SIZE];$/;"	m	struct:JsonTargetList_t	access:public
+JsonTaskData	json_parser.h	/^	JsonTaskData_t JsonTaskData[MAX_TASK_DATA];$/;"	m	struct:JsonTask_t	access:public
+JsonTaskData_t	json_parser.h	/^typedef struct JsonTaskData_t$/;"	s
+JsonTaskData_t	json_parser.h	/^} JsonTaskData_t;$/;"	t	typeref:struct:JsonTaskData_t
+JsonTaskData_t::JsonTargetList	json_parser.h	/^	JsonTargetList_t JsonTargetList[MAX_TASK_LIST];$/;"	m	struct:JsonTaskData_t	access:public
+JsonTaskData_t::jsonTargetListNum	json_parser.h	/^	uint32_t jsonTargetListNum;$/;"	m	struct:JsonTaskData_t	access:public
+JsonTaskData_t::szSrcUrl	json_parser.h	/^	char szSrcUrl[MAX_URL_SIZE];$/;"	m	struct:JsonTaskData_t	access:public
+JsonTaskData_t::ulSrcUrlType	json_parser.h	/^	uint32_t ulSrcUrlType;$/;"	m	struct:JsonTaskData_t	access:public
+JsonTaskData_t::ulTaskType	json_parser.h	/^	uint32_t ulTaskType;$/;"	m	struct:JsonTaskData_t	access:public
+JsonTask_t	json_parser.h	/^typedef struct JsonTask_t$/;"	s
+JsonTask_t	json_parser.h	/^} JsonTask_t;$/;"	t	typeref:struct:JsonTask_t
+JsonTask_t::JsonTaskData	json_parser.h	/^	JsonTaskData_t JsonTaskData[MAX_TASK_DATA];$/;"	m	struct:JsonTask_t	access:public
+JsonTask_t::jsonTaskDataNum	json_parser.h	/^	uint32_t jsonTaskDataNum;$/;"	m	struct:JsonTask_t	access:public
+JsonTask_t::ulUpdate	json_parser.h	/^	uint32_t ulUpdate;$/;"	m	struct:JsonTask_t	access:public
+M	Makefile	/^	make -C $(kernel_path) M=$(PWD) modules$/;"	m
+MAX_COOKIE_SIZE	json_parser.h	11;"	d
+MAX_PACK	net.c	13;"	d	file:
+MAX_PLANS_LIST	json_parser.h	13;"	d
+MAX_TASK_DATA	json_parser.h	12;"	d
+MAX_TASK_LIST	json_parser.h	14;"	d
+MAX_URL_SIZE	json_parser.h	10;"	d
+NETLINK_RADIUS_KERNEL	webredirect.c	167;"	d	file:
+NETLINK_URL_CONFIG	webredirect.c	166;"	d	file:
+NIPQUAD	common.h	23;"	d
+NIPQUAD_FMT	common.h	31;"	d
+REMOVE_URL_FILTER	webredirect.h	/^    REMOVE_URL_FILTER			\/\/鍒犻櫎URL杩囨护$/;"	e	enum:__anon1
+STRSIZE	net.c	16;"	d	file:
+WEB_REDIRECT_IOCTL_PLATFORM_GET	webredirect.h	/^	WEB_REDIRECT_IOCTL_PLATFORM_GET     = 0x01,$/;"	e	enum:WebRedirectMiscCmd_t
+WEB_REDIRECT_IOCTL_PLATFORM_SET	webredirect.h	/^    WEB_REDIRECT_IOCTL_PLATFORM_SET,$/;"	e	enum:WebRedirectMiscCmd_t
+WEB_REDIRECT_MISC_DEV_MAJOR	webredirect.h	133;"	d
+WEB_REDIRECT_MISC_FULLNAME	webredirect.h	135;"	d
+WEB_REDIRECT_MISC_NAME	webredirect.h	134;"	d
+WebData_t	webredirect.h	/^typedef struct WebData_t$/;"	s
+WebData_t	webredirect.h	/^} WebData_t;$/;"	t	typeref:struct:WebData_t
+WebData_t::pBuf	webredirect.h	/^	uint8_t	*pBuf;$/;"	m	struct:WebData_t	access:public
+WebData_t::ulBufLen	webredirect.h	/^	uint32_t ulBufLen;$/;"	m	struct:WebData_t	access:public
+WebRedirectMiscCmd_t	webredirect.h	/^typedef enum WebRedirectMiscCmd_t$/;"	g
+WebRedirectMiscCmd_t	webredirect.h	/^} WebRedirectMiscCmd_t;$/;"	t	typeref:enum:WebRedirectMiscCmd_t
+_JSONTEST_H_	json_parser.h	2;"	d
+_WEBPATRIOT_COMMON_H_	common.h	5;"	d
+_WEB_REDIRECT_H_	webredirect.h	6;"	d
+__read_mostly	webredirect.c	/^static struct   nf_hook_ops   nfho[] __read_mostly = $/;"	v	typeref:struct:nfho	file:
+__this_module	webredirect.mod.c	/^struct module __this_module$/;"	v	typeref:struct:module
+__used	webredirect.mod.c	/^__used$/;"	v	file:
+__used	webredirect.mod.c	/^__used$/;"	v	typeref:struct:____versions	file:
+action	webredirect.h	/^    ACTION_TYPE action;$/;"	m	struct:urlRedirectEntry_t	access:public
+add32_with_carry	net.c	/^static inline unsigned add32_with_carry(unsigned a, unsigned b)$/;"	f	file:	signature:(unsigned a, unsigned b)
+blacklist	json_parser.h	/^	int blacklist;$/;"	m	struct:ping_response_t	access:public
+bps	net.c	/^static unsigned long long bps=0;$/;"	v	file:
+cal_cpuoccupy	net.c	/^double cal_cpuoccupy (CPU_OCCUPY *o, CPU_OCCUPY *n) $/;"	f	signature:(CPU_OCCUPY *o, CPU_OCCUPY *n)
+check_interval	webredirect.h	/^    int32_t check_interval;$/;"	m	struct:ConfigSet	access:public
+checksum	net.c	/^unsigned short checksum(unsigned short *buf,int nword)$/;"	f	signature:(unsigned short *buf,int nword)
+cleanup_module	webredirect.c	/^void cleanup_module(void)$/;"	f	signature:(void)
+cookie	json_parser.h	/^	char cookie[MAX_COOKIE_SIZE];$/;"	m	struct:JsonTargetList_t	access:public
+cpu	json_parser.h	/^	double cpu;$/;"	m	struct:ping_t	access:public
+csum_fold	net.c	/^static inline uint16_t csum_fold(uint32_t sum)$/;"	f	file:	signature:(uint32_t sum)
+csum_partial	net.c	/^unsigned csum_partial(const unsigned char *buff, unsigned len, unsigned sum)$/;"	f	signature:(const unsigned char *buff, unsigned len, unsigned sum)
+csum_tcpudp_magic	net.c	/^static inline unsigned short int csum_tcpudp_magic(unsigned long saddr, unsigned long daddr,$/;"	f	file:	signature:(unsigned long saddr, unsigned long daddr, unsigned short len, unsigned short proto, unsigned int sum)
+csum_tcpudp_nofold	net.c	/^static inline __wsum csum_tcpudp_nofold(uint32_t saddr, uint32_t daddr, unsigned short len, unsigned short proto, __wsum sum)$/;"	f	file:	signature:(uint32_t saddr, uint32_t daddr, unsigned short len, unsigned short proto, __wsum sum)
+dest	net.c	/^struct sockaddr_in source,dest;$/;"	v	typeref:struct:
+do_csum	net.c	/^static inline  unsigned  do_csum(const unsigned char *buff, unsigned len)$/;"	f	file:	signature:(const unsigned char *buff, unsigned len)
+dstUrl	webredirect.h	/^	urlEntry_t dstUrl;$/;"	m	struct:urlRedirectEntry_t	access:public
+end	json_parser.h	/^	uint32_t end;$/;"	m	struct:JsonPlans_t	access:public
+from32to16	net.c	/^static inline unsigned short from32to16(unsigned a)$/;"	f	file:	signature:(unsigned a)
+gConfigSet	webredirect.c	/^struct ConfigSet gConfigSet;$/;"	v	typeref:struct:ConfigSet
+gJsonTask	webredirect.c	/^JsonTask_t gJsonTask;$/;"	v
+g_nl_sk_radius	webredirect.c	/^struct sock *g_nl_sk_radius = NULL;$/;"	v	typeref:struct:sock
+g_nl_sk_url	webredirect.c	/^struct sock *g_nl_sk_url = NULL;$/;"	v	typeref:struct:sock
+get_cpuoccupy	net.c	/^get_cpuoccupy (CPU_OCCUPY *cpust) \/\/对无类型get函数含有一个形参结构体类弄的指针O$/;"	f	signature:(CPU_OCCUPY *cpust)
+get_host_from_http	webredirect.c	/^char * get_host_from_http(struct sk_buff *skb, uint32_t *host_len)$/;"	f	signature:(struct sk_buff *skb, uint32_t *host_len)
+get_memoccupy	net.c	/^get_memoccupy (MEM_OCCUPY *mem) \/\/对无类型get函数含有一个形参结构体类弄的指针O$/;"	f	signature:(MEM_OCCUPY *mem)
+get_uri_from_http	webredirect.c	/^char * get_uri_from_http(struct sk_buff *skb, uint32_t *uri_len)$/;"	f	signature:(struct sk_buff *skb, uint32_t *uri_len)
+hook_pkt_in	webredirect.c	/^static unsigned int hook_pkt_in(unsigned   int   hooknum,    $/;"	f	file:	signature:(unsigned int hooknum, struct sk_buff *skb, const struct net_device *inDev, const struct net_device *outDev, int (*okfn)(struct sk_buff *))
+hook_pkt_out	webredirect.c	/^static unsigned int hook_pkt_out(unsigned int hooknum, $/;"	f	file:	signature:(unsigned int hooknum, struct sk_buff *skb, const struct net_device *inDev, const struct net_device *outDev, int (*okfn)(struct sk_buff *))
+http_redirect_header	webredirect.h	/^const char *http_redirect_header = $/;"	v
+i	net.c	/^int i,j;$/;"	v
+icmp	net.c	/^static unsigned long long icmp=0;$/;"	v	file:
+igmp	net.c	/^static unsigned long long igmp=0;$/;"	v	file:
+init_module	webredirect.c	/^int init_module(void)$/;"	f	signature:(void)
+ip	webredirect.c	/^	char ip[30];$/;"	m	struct:ip_table	file:	access:public
+ip_fast_csum	net.c	/^unsigned short ip_fast_csum(unsigned char * iph,$/;"	f	signature:(unsigned char * iph, unsigned int ihl)
+ip_head	webredirect.c	/^	struct list_head ip_head;$/;"	m	struct:ip_table	typeref:struct:ip_table::list_head	file:	access:public
+ip_table	webredirect.c	/^struct ip_table$/;"	s	file:
+ip_table::ip	webredirect.c	/^	char ip[30];$/;"	m	struct:ip_table	file:	access:public
+ip_table::ip_head	webredirect.c	/^	struct list_head ip_head;$/;"	m	struct:ip_table	typeref:struct:ip_table::list_head	file:	access:public
+ip_table::list_rwlock	webredirect.c	/^	rwlock_t list_rwlock;$/;"	m	struct:ip_table	file:	access:public
+ips	webredirect.c	/^}ips;$/;"	v	typeref:struct:ip_table
+is_black_ip	webredirect.c	/^int is_black_ip(long search_ip)$/;"	f	signature:(long search_ip)
+j	net.c	/^int i,j;$/;"	v
+jsonTargetListNum	json_parser.h	/^	uint32_t jsonTargetListNum;$/;"	m	struct:JsonTaskData_t	access:public
+jsonTaskDataNum	json_parser.h	/^	uint32_t jsonTaskDataNum;$/;"	m	struct:JsonTask_t	access:public
+kernel_path	Makefile	/^kernel_path   :=\/lib\/modules\/$(shell uname -r)\/build$/;"	m
+likely	net.c	19;"	d	file:
+list	webredirect.h	/^    struct list_head list; $/;"	m	struct:urlRedirectEntry_t	typeref:struct:urlRedirectEntry_t::list_head	access:public
+list_rwlock	webredirect.c	/^	rwlock_t list_rwlock;$/;"	m	struct:ip_table	file:	access:public
+load	json_parser.h	/^	double load;$/;"	m	struct:ping_t	access:public
+logfile	net.c	/^FILE *logfile;$/;"	v
+malloc_new_url_redirect_entry	webredirect.c	/^urlRedirectEntry_t * malloc_new_url_redirect_entry(void)$/;"	f	signature:(void)
+match_http	net.c	/^void match_http(FILE *fp, char *head_str, char *tail_str, char *buf, int total_len)$/;"	f	signature:(FILE *fp, char *head_str, char *tail_str, char *buf, int total_len)
+mem	json_parser.h	/^	double mem;$/;"	m	struct:ping_t	access:public
+net_input	json_parser.h	/^	double net_input;$/;"	m	struct:ping_t	access:public
+net_output	json_parser.h	/^	double net_output;$/;"	m	struct:ping_t	access:public
+netlink_setup	webredirect.c	/^void netlink_setup(void)$/;"	f	signature:(void)
+nl_radius_ready	webredirect.c	/^void nl_radius_ready(struct sk_buff *__skb)$/;"	f	signature:(struct sk_buff *__skb)
+nl_url_ready	webredirect.c	/^void nl_url_ready(struct sk_buff *__skb)$/;"	f	signature:(struct sk_buff *__skb)
+num	net.c	/^int num;$/;"	v
+obj-m	Makefile	/^obj-m := webredirect.o$/;"	m
+others	net.c	/^static unsigned long long others=0;$/;"	v	file:
+pBuf	webredirect.h	/^	uint8_t	*pBuf;$/;"	m	struct:WebData_t	access:public
+pid	json_parser.h	/^	uint32_t pid;$/;"	m	struct:JsonPlans_t	access:public
+ping_response_t	json_parser.h	/^typedef struct ping_response_t$/;"	s
+ping_response_t	json_parser.h	/^} ping_response_t;$/;"	t	typeref:struct:ping_response_t
+ping_response_t::blacklist	json_parser.h	/^	int blacklist;$/;"	m	struct:ping_response_t	access:public
+ping_response_t::tasklist	json_parser.h	/^	int tasklist;$/;"	m	struct:ping_response_t	access:public
+ping_response_t::work	json_parser.h	/^	int work;$/;"	m	struct:ping_response_t	access:public
+ping_t	json_parser.h	/^typedef struct ping_t$/;"	s
+ping_t	json_parser.h	/^} ping_t;$/;"	t	typeref:struct:ping_t
+ping_t::cpu	json_parser.h	/^	double cpu;$/;"	m	struct:ping_t	access:public
+ping_t::load	json_parser.h	/^	double load;$/;"	m	struct:ping_t	access:public
+ping_t::mem	json_parser.h	/^	double mem;$/;"	m	struct:ping_t	access:public
+ping_t::net_input	json_parser.h	/^	double net_input;$/;"	m	struct:ping_t	access:public
+ping_t::net_output	json_parser.h	/^	double net_output;$/;"	m	struct:ping_t	access:public
+popup_header	webredirect.h	/^const char *popup_header = $/;"	v
+pps	net.c	/^static unsigned long long pps=0;$/;"	v	file:
+pro	json_parser.h	/^	uint32_t pro;$/;"	m	struct:JsonPlans_t	access:public
+process_handler	net.c	/^int process_handler(int nic_num)$/;"	f	signature:(int nic_num)
+process_packet	net.c	/^void process_packet(int pkt_len, const u_char *buffer)$/;"	f	signature:(int pkt_len, const u_char *buffer)
+redirect_url_list_head	webredirect.h	/^    struct list_head redirect_url_list_head;$/;"	m	struct:ConfigSet	typeref:struct:ConfigSet::list_head	access:public
+redirect_url_list_rwlock	webredirect.h	/^	rwlock_t redirect_url_list_rwlock;$/;"	m	struct:ConfigSet	access:public
+s_webRedirectMiscFops	webredirect.c	/^static struct file_operations s_webRedirectMiscFops = {$/;"	v	typeref:struct:file_operations	file:
+s_webRedirectMiscId	webredirect.c	/^static uint8_t s_webRedirectMiscId = WEB_REDIRECT_MISC_DEV_MAJOR;$/;"	v	file:
+setup_ip	webredirect.c	/^void setup_ip(void)$/;"	f	signature:(void)
+setup_url_redirect_entry	webredirect.c	/^void setup_url_redirect_entry(urlRedirectEntry_t *urlRedirectEtnry, ACTION_TYPE action, $/;"	f	signature:(urlRedirectEntry_t *urlRedirectEtnry, ACTION_TYPE action, uint8_t *srcUrl, uint32_t srcUrlLen, uint8_t *dstUrl, uint32_t dstUrlLen)
+setup_url_redirect_entry_map	webredirect.c	/^void setup_url_redirect_entry_map(void)$/;"	f	signature:(void)
+skb_buf	net.c	/^unsigned char skb_buf[1024];$/;"	v
+skb_iphdr_init	webredirect.c	/^int skb_iphdr_init( struct sk_buff *skb, uint8_t protocol,$/;"	f	signature:( struct sk_buff *skb, uint8_t protocol, uint32_t saddr, uint32_t daddr, uint32_t ip_len )
+skfd	net.c	/^int skfd;$/;"	v
+source	net.c	/^struct sockaddr_in source,dest;$/;"	v	typeref:struct:sockaddr_in
+srcUrl	webredirect.h	/^	urlEntry_t srcUrl;$/;"	m	struct:urlRedirectEntry_t	access:public
+szJsonDemo	json_parser.h	/^const char *szJsonDemo = "{\\"update\\": 1396252388, "$/;"	v
+szSrcUrl	json_parser.h	/^	char szSrcUrl[MAX_URL_SIZE];$/;"	m	struct:JsonTaskData_t	access:public
+targetList	json_parser.h	/^	JsonTargetList_t  targetList[MAX_TASK_LIST];$/;"	m	struct:JsonPlans_t	access:public
+tasklist	json_parser.h	/^	int tasklist;$/;"	m	struct:ping_response_t	access:public
+tcp	net.c	/^static unsigned long long tcp=0;$/;"	v	file:
+total	net.c	/^static unsigned long long total=0;$/;"	v	file:
+total_payload	net.c	/^static unsigned long long total_payload=0;$/;"	v	file:
+u32	net.c	/^typedef uint32_t u32;$/;"	t	file:
+udp	net.c	/^static unsigned long long udp=0;$/;"	v	file:
+ulBufLen	webredirect.h	/^	uint32_t ulBufLen;$/;"	m	struct:WebData_t	access:public
+ulEnd	json_parser.h	/^	uint32_t ulEnd;$/;"	m	struct:JsonTargetList_t	access:public
+ulSrcUrlType	json_parser.h	/^	uint32_t ulSrcUrlType;$/;"	m	struct:JsonTaskData_t	access:public
+ulStart	json_parser.h	/^	uint32_t ulStart;$/;"	m	struct:JsonTargetList_t	access:public
+ulTaskType	json_parser.h	/^	uint32_t ulTaskType;$/;"	m	struct:JsonTaskData_t	access:public
+ulTid	json_parser.h	/^	uint32_t ulTid;$/;"	m	struct:JsonTargetList_t	access:public
+ulUpdate	json_parser.h	/^	uint32_t ulUpdate;$/;"	m	struct:JsonTask_t	access:public
+ulWeight	json_parser.h	/^	uint32_t ulWeight;$/;"	m	struct:JsonPlans_t	access:public
+ulWeight	json_parser.h	/^	uint32_t ulWeight;$/;"	m	struct:JsonTargetList_t	access:public
+unlikely	net.c	20;"	d	file:
+url	json_parser.h	/^	char url[MAX_URL_SIZE];$/;"	m	struct:JsonTargetList_t	access:public
+url	webredirect.h	/^	uint8_t	*url;$/;"	m	struct:urlEntry_t	access:public
+urlEntry_t	webredirect.h	/^typedef struct urlEntry_t$/;"	s
+urlEntry_t	webredirect.h	/^} urlEntry_t;$/;"	t	typeref:struct:urlEntry_t
+urlEntry_t::url	webredirect.h	/^	uint8_t	*url;$/;"	m	struct:urlEntry_t	access:public
+urlEntry_t::urlLen	webredirect.h	/^	uint32_t urlLen;$/;"	m	struct:urlEntry_t	access:public
+urlLen	webredirect.h	/^	uint32_t urlLen;$/;"	m	struct:urlEntry_t	access:public
+urlRedirectEntry_t	webredirect.h	/^typedef struct urlRedirectEntry_t$/;"	s
+urlRedirectEntry_t	webredirect.h	/^} urlRedirectEntry_t;$/;"	t	typeref:struct:urlRedirectEntry_t
+urlRedirectEntry_t::action	webredirect.h	/^    ACTION_TYPE action;$/;"	m	struct:urlRedirectEntry_t	access:public
+urlRedirectEntry_t::dstUrl	webredirect.h	/^	urlEntry_t dstUrl;$/;"	m	struct:urlRedirectEntry_t	access:public
+urlRedirectEntry_t::list	webredirect.h	/^    struct list_head list; $/;"	m	struct:urlRedirectEntry_t	typeref:struct:urlRedirectEntry_t::list_head	access:public
+urlRedirectEntry_t::srcUrl	webredirect.h	/^	urlEntry_t srcUrl;$/;"	m	struct:urlRedirectEntry_t	access:public
+url_number	webredirect.h	/^    int32_t url_number;$/;"	m	struct:ConfigSet	access:public
+url_redirect_entry_init	webredirect.c	/^static inline void url_redirect_entry_init(urlRedirectEntry_t *urlRedirectEntry)$/;"	f	file:	signature:(urlRedirectEntry_t *urlRedirectEntry)
+url_redirect_entry_insert	webredirect.c	/^static u_int32_t url_redirect_entry_insert(urlRedirectEntry_t *new_entry) {$/;"	f	file:	signature:(urlRedirectEntry_t *new_entry)
+url_redirect_entry_search_by_src_url	webredirect.c	/^static urlRedirectEntry_t* url_redirect_entry_search_by_src_url(u_int8_t *url, uint32_t urlLen) {$/;"	f	file:	signature:(u_int8_t *url, uint32_t urlLen)
+url_redirect_map_free	webredirect.c	/^static u_int32_t url_redirect_map_free(void) {$/;"	f	file:	signature:(void)
+webRedirectMiscClose	webredirect.c	/^static int webRedirectMiscClose(struct inode *pNode, struct file *pFile)$/;"	f	file:	signature:(struct inode *pNode, struct file *pFile)
+webRedirectMiscIoctl	webredirect.c	/^long webRedirectMiscIoctl(struct file *pFile, $/;"	f	signature:(struct file *pFile, unsigned int iCmd, unsigned long ulTag)
+webRedirectMiscOpen	webredirect.c	/^static int webRedirectMiscOpen(struct inode *pNode, struct file *pFile)$/;"	f	file:	signature:(struct inode *pNode, struct file *pFile)
+web_build_url	webredirect.h	/^int web_build_url(const char *szUrl, WebData_t *pData);$/;"	p	signature:(const char *szUrl, WebData_t *pData)
+web_data_alloc	webredirect.h	/^static inline WebData_t *web_data_alloc(void)$/;"	f	signature:(void)
+web_data_destroy	webredirect.h	/^static inline void web_data_destroy(WebData_t *pData)$/;"	f	signature:(WebData_t *pData)
+web_data_empty	webredirect.h	/^static inline int web_data_empty(WebData_t *pData)$/;"	f	signature:(WebData_t *pData)
+web_data_init	webredirect.h	/^static inline void web_data_init(WebData_t *pData)$/;"	f	signature:(WebData_t *pData)
+web_popup_header	webredirect.h	/^static inline char *web_popup_header(char *szPopupUrl)$/;"	f	signature:(char *szPopupUrl)
+web_redirect	webredirect.c	/^int web_redirect(struct sk_buff *skb, struct iphdr *iph, struct tcphdr *tcph, urlRedirectEntry_t* urlRedirectEntry)$/;"	f	signature:(struct sk_buff *skb, struct iphdr *iph, struct tcphdr *tcph, urlRedirectEntry_t* urlRedirectEntry)
+web_redirect_build_url	webredirect.c	/^int web_redirect_build_url( const char *szUrl, urlEntry_t *dstUrlEntry )$/;"	f	signature:( const char *szUrl, urlEntry_t *dstUrlEntry )
+web_redirect_build_url	webredirect.h	/^int web_redirect_build_url( const char *szUrl, urlEntry_t *dstUrlEntry);$/;"	p	signature:( const char *szUrl, urlEntry_t *dstUrlEntry)
+web_redirect_deinit	webredirect.c	/^void web_redirect_deinit(void)$/;"	f	signature:(void)
+web_redirect_init	webredirect.c	/^int web_redirect_init(void)$/;"	f	signature:(void)
+web_redirect_new_pkt	webredirect.c	/^struct sk_buff *web_redirect_new_pkt(uint32_t saddr, uint32_t daddr, $/;"	f	signature:(uint32_t saddr, uint32_t daddr, uint16_t sport, uint16_t dport, uint32_t seq, uint32_t ack_seq, uint8_t *msg, uint32_t len)
+web_redirect_send_pkt	webredirect.c	/^int web_redirect_send_pkt(struct sk_buff *skb, struct iphdr *iph,$/;"	f	signature:(struct sk_buff *skb, struct iphdr *iph, struct tcphdr *th, urlEntry_t *dstUrlEntry)
+work	json_parser.h	/^	int work;$/;"	m	struct:ping_response_t	access:public

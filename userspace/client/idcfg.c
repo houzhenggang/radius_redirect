@@ -70,10 +70,10 @@ int main(int argc,char *argv[])
 			fprintf(stderr,"黑名单ID长度限制在30个字符以内\n");
 			continue;
 		}
+		id[strlen(id)-1] = 0;
 
 		msg.o_type = type;
-		msg.id[strlen(id)] = 0;
-		strncpy(msg.id, id, strlen(id));
+		strcpy(msg.id, id);
 		msgsnd(msgqid, &msg, 1024, 0);
 		fprintf(stdout, "添加黑名单成功\n");
 	}

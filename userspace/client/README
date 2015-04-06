@@ -1,0 +1,18 @@
+.
+├── idcfg
+├── idcfg.c
+├── README
+├── urlcfg
+└── urlcfg.c
+
+这些属于附加功能。
+
+idcfg只负责与radius解析程序打交道,添加和删除黑名单ID信息，
+	添加功能：与radius解析程序打交道，radius解析程序不用发往kernel
+	删除功能:与radius解析程序打交道，radius解析程序在内存，文件中将id删去，同时告诉内核，把id相关的过滤信息删去
+
+urlcfg只负责与kernel打交道，给kernel发送url重定向信息，简单的采用采用命令行参数控制
+	a:192.168.19.141/-\>www.baidu.com表示将重定向信息192.168.19.141/->www.baidu.com添加(add)到重定向表添加功能已经完成来
+
+
+

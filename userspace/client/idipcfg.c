@@ -32,7 +32,7 @@ struct msghdr nl_msg;
 
 void init_nl()
 {
-	nl_fd = socket(PF_NETLINK, SOCK_RAW, NETLINK_URL_CONFIG);
+	nl_fd = socket(PF_NETLINK, SOCK_RAW, NETLINK_RADIUS_KERNEL);
 	if(nl_fd<0)
 	{
 		perror("socket");
