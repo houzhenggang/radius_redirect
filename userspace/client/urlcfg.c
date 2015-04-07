@@ -7,6 +7,8 @@
 
 #include<stdio.h>
 #include <unistd.h>
+#include <errno.h>
+#include <error.h>
 #include <stdlib.h>
 #include <sys/socket.h>
 #include <string.h>
@@ -14,11 +16,13 @@
 #include <linux/socket.h>
 #include <sys/types.h>
 #include <asm/types.h>
+#define CONFIG_URL "../../config/url.conf"
 
 #define NETLINK_URL_CONFIG 25
 #define NETLINK_RADIUS_KERNEL 26
 #define MAX_PAYLOAD 512
-
+#define error(msg)\
+	{fprintf(stderr,"%s error with:%s\n", msg, strerror(errno));exit(-1);}
 //地址结构
 struct sockaddr_nl nl_src_addr, nl_dest_addr;
 
@@ -82,11 +86,16 @@ void sendnlmsg(char *message)
 
 int main(int argc, char **argv)
 {
-	init_nl();
+	FILE *fp = NULL;
 
 	if(argc != 2)
 		return 0;
-	init_nl();
+//	init_nl();
 
-	sendnlmsg(argv[1]);
+//	sendnlmsg(argv[1]);
+	fp = fopen(CONFIG_URL, "a+");
+	if(fp == NULL)
+		error("fopen");
+	fprintf(fp, "%s\n", (char*)&(argv[1][1]));
+	fclose(fp);
 }
