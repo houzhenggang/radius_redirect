@@ -10,45 +10,54 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 
-//消息队列的KEY值
-#define MSGKEY 75
-#define MAX_ID_LEN	30
-
-/* 用户操作类型，包括添加黑名单ID和
- * 删除黑名单ID两个类型 */
-
-//添加黑名单ID
-#define T_ADD_ID 1
-/* 删除黑名单ID */
-#define T_REMOVE_ID	2
-
-/*
- * 消息体
- *
- * */
-struct  msgform
-{ 
-	/* 操作类型 */
-	int  o_type;
-	/* 操作ID */
-    char  id[30];
-}msg;
-
+#include "idcfg.h"
+#define CONFIG_ID "../../config/id.conf"
 /* 消息队列ID */
 int  msgqid;
+
+#define error(msg) \
+	{fprintf(stderr,"%s error with:%s\n", msg, strerror(errno));exit(-1);}
+
+int get_msg_connect()
+{
+	int msgqid = 0;
+	msgqid = msgget(MSGKEY,0777);
+	if(msgqid == -1)
+	{
+		fprintf(stderr,"消息队列服务端未启动，请检查Radius解析程序是否已经启动\n");
+		error("msgget");
+	}
+	return msgqid;
+}
+
+void show_all_ids()
+{
+	char id[30];
+	FILE *fp = fopen(CONFIG_ID, "r");
+	if(fp == NULL)
+		error("fopen");
+	printf("当前黑名单列表\n");
+	printf("+-----------------+------------------+\n");
+	while(fscanf(fp, "%s", id) != EOF)
+		printf("%s\n", id);
+
+	printf("+-----------------+------------------+\n");
+	if(fp != NULL)
+		fclose(fp);
+}
+
 
 int main(int argc,char *argv[])
 {
 	int type;
 	char id[30];
-	msgqid = msgget(MSGKEY,0777);
-	if(msgqid == -1)
-	{
-		fprintf(stderr, "消息队列服务器端未开启,请检查radius解析程序是否运行\n");
-		exit(-1);
-	}
+	msgqid = get_msg_connect(MSGKEY, 0777);
+	
 	fprintf(stdout,"\n黑名单管理程序提供对黑名单的添加和删除操作\n");
+	show_all_ids();
+
 	while(1)
 	{
 		printf("输入操作类型:");
@@ -63,6 +72,8 @@ int main(int argc,char *argv[])
 			continue;
 		}
 		printf("请输入操作的用户ID:");
+		
+		//把scanf后面的\n从缓冲中读取出来
 		getchar();	
 		fgets(id, MAX_ID_LEN, stdin);
 		if(strlen(id)>30)
@@ -70,12 +81,20 @@ int main(int argc,char *argv[])
 			fprintf(stderr,"黑名单ID长度限制在30个字符以内\n");
 			continue;
 		}
+		//fgets最后有个换行
 		id[strlen(id)-1] = 0;
 
 		msg.o_type = type;
 		strcpy(msg.id, id);
-		msgsnd(msgqid, &msg, 1024, 0);
-		fprintf(stdout, "添加黑名单成功\n");
+		if( msgsnd(msgqid, &msg, 1024, 0) <0)
+			error("msgsnd");
+		
+
+
+		fprintf(stdout, "操作成功\n");
+		sleep(1);
+		show_all_ids();
+
 	}
 
 	printf("程序即将结束.....bye\n");

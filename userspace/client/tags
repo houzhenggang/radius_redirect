@@ -1,0 +1,51 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CONFIG_ID	init_id.c	19;"	d	file:
+MAX_ID_LEN	idcfg.h	16;"	d
+MAX_PAYLOAD	idipcfg.c	20;"	d	file:
+MAX_PAYLOAD	urlcfg.c	20;"	d	file:
+MSGKEY	idcfg.h	15;"	d
+NETLINK_RADIUS_KERNEL	idipcfg.c	19;"	d	file:
+NETLINK_RADIUS_KERNEL	urlcfg.c	19;"	d	file:
+NETLINK_URL_CONFIG	idipcfg.c	18;"	d	file:
+NETLINK_URL_CONFIG	urlcfg.c	18;"	d	file:
+T_ADD_ID	idcfg.h	18;"	d
+T_REMOVE_ID	idcfg.h	19;"	d
+error	idcfg.c	20;"	d	file:
+get_msg_connect	idcfg.c	/^int get_msg_connect()$/;"	f
+get_msg_connect	init_id.c	/^int get_msg_connect()$/;"	f
+id	idcfg.h	/^    char  id[30];$/;"	m	struct:msgform	access:public
+init_nl	idipcfg.c	/^void init_nl()$/;"	f
+init_nl	urlcfg.c	/^void init_nl()$/;"	f
+iov	idipcfg.c	/^struct iovec iov;$/;"	v	typeref:struct:iovec
+iov	urlcfg.c	/^struct iovec iov;$/;"	v	typeref:struct:iovec
+main	idcfg.c	/^int main(int argc,char *argv[])$/;"	f	signature:(int argc,char *argv[])
+main	idipcfg.c	/^int main(int argc, char **argv)$/;"	f	signature:(int argc, char **argv)
+main	init_id.c	/^int main(int argc,char *argv[])$/;"	f	signature:(int argc,char *argv[])
+main	urlcfg.c	/^int main(int argc, char **argv)$/;"	f	signature:(int argc, char **argv)
+msg	idcfg.h	/^}msg;$/;"	v	typeref:struct:msgform
+msgform	idcfg.h	/^struct  msgform$/;"	s
+msgform::id	idcfg.h	/^    char  id[30];$/;"	m	struct:msgform	access:public
+msgform::o_type	idcfg.h	/^	int  o_type;$/;"	m	struct:msgform	access:public
+msgqid	idcfg.c	/^int  msgqid;$/;"	v
+msgqid	init_id.c	/^int  msgqid;$/;"	v
+nl_dest_addr	idipcfg.c	/^struct sockaddr_nl nl_src_addr, nl_dest_addr;$/;"	v	typeref:struct:
+nl_dest_addr	urlcfg.c	/^struct sockaddr_nl nl_src_addr, nl_dest_addr;$/;"	v	typeref:struct:
+nl_fd	idipcfg.c	/^int nl_fd;$/;"	v
+nl_fd	urlcfg.c	/^int nl_fd;$/;"	v
+nl_msg	idipcfg.c	/^struct msghdr nl_msg;$/;"	v	typeref:struct:msghdr
+nl_msg	urlcfg.c	/^struct msghdr nl_msg;$/;"	v	typeref:struct:msghdr
+nl_src_addr	idipcfg.c	/^struct sockaddr_nl nl_src_addr, nl_dest_addr;$/;"	v	typeref:struct:sockaddr_nl
+nl_src_addr	urlcfg.c	/^struct sockaddr_nl nl_src_addr, nl_dest_addr;$/;"	v	typeref:struct:sockaddr_nl
+nlh	idipcfg.c	/^struct nlmsghdr *nlh = NULL;$/;"	v	typeref:struct:nlmsghdr
+nlh	urlcfg.c	/^struct nlmsghdr *nlh = NULL;$/;"	v	typeref:struct:nlmsghdr
+o_type	idcfg.h	/^	int  o_type;$/;"	m	struct:msgform	access:public
+sendnlmsg	idipcfg.c	/^void sendnlmsg(char *message)$/;"	f	signature:(char *message)
+sendnlmsg	urlcfg.c	/^void sendnlmsg(char *message)$/;"	f	signature:(char *message)
+show_all_id	idcfg.h	/^void show_all_id();$/;"	p	signature:()
+show_all_ids	idcfg.c	/^void show_all_ids()$/;"	f
+show_all_ids	init_id.c	/^void show_all_ids()$/;"	f

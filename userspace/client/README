@@ -1,18 +1,21 @@
-.
-├── idcfg
-├── idcfg.c
+├── idcfg		--------添加和删除黑名单ID操作 sudo ./idcfg
+├── idcfg.c		
+├── idcfg.h
+├── idipcfg		--------添加和删除id操作，一般情况下不使用，开发者用于测试使用，可以绕过radius和内核通信
+├── idipcfg.c
+├── init_id		--------初始化id操作，在整个模块启动或者重启时，恢复原来的黑名单状态，建议尽量不要使用
+├── init_id.c
+├── init_url		--------初始化重定向操作，在整个模块启动或者重启时，恢复原来的重定向信息，建议尽量不要使用
+├── init_url.c
+├── Makefile
 ├── README
-├── urlcfg
+├── README~
+├── tags
+├── urlcfg		--------配置重定向信息
 └── urlcfg.c
 
-这些属于附加功能。
+附：这些属于附加功能。
 
-idcfg只负责与radius解析程序打交道,添加和删除黑名单ID信息，
-	添加功能：与radius解析程序打交道，radius解析程序不用发往kernel
-	删除功能:与radius解析程序打交道，radius解析程序在内存，文件中将id删去，同时告诉内核，把id相关的过滤信息删去
-
-urlcfg只负责与kernel打交道，给kernel发送url重定向信息，简单的采用采用命令行参数控制
-	a:192.168.19.141/-\>www.baidu.com表示将重定向信息192.168.19.141/->www.baidu.com添加(add)到重定向表添加功能已经完成来
 
 
 

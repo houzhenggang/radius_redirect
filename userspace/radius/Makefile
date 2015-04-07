@@ -1,21 +1,9 @@
-TARGET  = json_parser
-
-JSON_C_DIR = /usr/local/
-CFLAGS += ./_slist/slist.c
-
-CC = gcc
-STRIP = strip
-
-SOURCE = radius.c
-
-OBJS = $(SOURCE:%.c=obj/%.o)
-
-$(TARGET): clean $(OBJS)	
-	$(CC) -o $@ $(OBJS) $(LDFLAGS)
-	$(STRIP) $(TARGET)
-	
-obj/%.o:%.c
-	@mkdir -p obj
-	$(CC) -c $< -o $@
-clean:	
-	rm -fr obj $(OBJS) $(TARGET)
+all:radius
+radius:radius.o slist.o
+	gcc radius.o slist.o -lpthread -o radius
+radius.o:radius.c
+	gcc -c radius.c -o radius.o
+slist.o:./_slist/slist.c ./_slist/slist.h
+	gcc -c ./_slist/slist.c -o slist.o
+clean:
+	rm -rf *.o radius 

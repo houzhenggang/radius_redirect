@@ -1,0 +1,72 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BLACK_TABLE	radius.c	87;"	d	file:
+CC	Makefile	/^CC = gcc$/;"	m
+JSON_C_DIR	Makefile	/^JSON_C_DIR = \/usr\/local\/$/;"	m
+MAX_ETH_FRAME	radius.c	37;"	d	file:
+MAX_NAME	_slist/demo/single_list_demo.c	15;"	d	file:
+MAX_PAYLOAD	radius.c	197;"	d	file:
+MSGKEY	radius.c	35;"	d	file:
+NETLINK_RADIUS_KERNEL	radius.c	195;"	d	file:
+OBJS	Makefile	/^OBJS = $(SOURCE:%.c=obj\/%.o)$/;"	m
+SOURCE	Makefile	/^SOURCE = radius.c$/;"	m
+STRIP	Makefile	/^STRIP = strip$/;"	m
+TARGET	Makefile	/^TARGET  = json_parser$/;"	m
+T_ADD_ID	radius.c	39;"	d	file:
+T_REMOVE_ID	radius.c	40;"	d	file:
+__anon1::id	radius.c	/^	char id[30];$/;"	m	struct:__anon1	file:	access:public
+__anon1::o_type	radius.c	/^	int o_type;$/;"	m	struct:__anon1	file:	access:public
+auth	radius.c	/^	unsigned char auth[16];			$/;"	m	struct:radiushdr	file:	access:public
+buff	radius.c	/^char *buff = NULL;$/;"	v
+code	radius.c	/^	unsigned char code;			$/;"	m	struct:radiushdr	file:	access:public
+data	_slist/slist.h	/^	void* data;$/;"	m	struct:slist	access:public
+error	radius.c	84;"	d	file:
+get_radius	radius.c	/^void get_radius()$/;"	f
+get_radius	radius.c	/^void get_radius();$/;"	p	file:
+id	radius.c	/^	char id[20];$/;"	m	struct:id_table	file:	access:public
+id	radius.c	/^	char id[30];$/;"	m	struct:__anon1	file:	access:public
+id	radius.c	/^}id;$/;"	v	typeref:struct:id_table
+id_list	radius.c	/^struct slist *id_list;$/;"	v	typeref:struct:slist
+id_table	radius.c	/^struct id_table$/;"	s	file:
+id_table::id	radius.c	/^	char id[20];$/;"	m	struct:id_table	file:	access:public
+identifier	radius.c	/^	unsigned char identifier;		$/;"	m	struct:radiushdr	file:	access:public
+is_black_table	radius.c	/^int is_black_table();$/;"	p	file:
+is_black_table	radius.c	/^int is_black_table(void)$/;"	f	signature:(void)
+length	radius.c	/^	short length;						$/;"	m	struct:radiushdr	file:	access:public
+main	_slist/demo/single_list_demo.c	/^int main()$/;"	f
+main	radius.c	/^int main (int argc, const char * argv[])  $/;"	f	signature:(int argc, const char * argv[])
+msg	radius.c	/^}msg;$/;"	v	typeref:struct:__anon1
+msg_server	radius.c	/^void msg_server( )$/;"	f
+next	_slist/slist.h	/^	struct slist *next;$/;"	m	struct:slist	typeref:struct:slist::slist	access:public
+o_type	radius.c	/^	int o_type;$/;"	m	struct:__anon1	file:	access:public
+parse_radius	radius.c	/^void parse_radius()$/;"	f
+parse_radius	radius.c	/^void parse_radius();$/;"	p	file:
+pslist	_slist/slist.h	/^}*pslist;$/;"	t	typeref:struct:slist
+radius_head	radius.c	/^}*radius_head;$/;"	v	typeref:struct:radiushdr
+radiushdr	radius.c	/^struct radiushdr$/;"	s	file:
+radiushdr::auth	radius.c	/^	unsigned char auth[16];			$/;"	m	struct:radiushdr	file:	access:public
+radiushdr::code	radius.c	/^	unsigned char code;			$/;"	m	struct:radiushdr	file:	access:public
+radiushdr::identifier	radius.c	/^	unsigned char identifier;		$/;"	m	struct:radiushdr	file:	access:public
+radiushdr::length	radius.c	/^	short length;						$/;"	m	struct:radiushdr	file:	access:public
+readSize	radius.c	/^int readSize;$/;"	v
+send_ip	radius.c	/^char send_ip[30];$/;"	v
+send_redirect	radius.c	/^int send_redirect(char type,char *id,char *ip)$/;"	f	signature:(char type,char *id,char *ip)
+slist	_slist/slist.h	/^typedef struct slist$/;"	s
+slist::data	_slist/slist.h	/^	void* data;$/;"	m	struct:slist	access:public
+slist::next	_slist/slist.h	/^	struct slist *next;$/;"	m	struct:slist	typeref:struct:slist::slist	access:public
+slist_add_head	_slist/slist.c	/^void slist_add_head(pslist l,void* data, int len)$/;"	f	signature:(pslist l,void* data, int len)
+slist_add_head	_slist/slist.h	/^void slist_add_head(pslist, void*, int);$/;"	p	signature:(pslist, void*, int)
+slist_add_tail	_slist/slist.c	/^void slist_add_tail(pslist l,void* data, int len)$/;"	f	signature:(pslist l,void* data, int len)
+slist_add_tail	_slist/slist.h	/^void slist_add_tail(pslist, void*, int);$/;"	p	signature:(pslist, void*, int)
+slist_drop	_slist/slist.c	/^void slist_drop(pslist l)$/;"	f	signature:(pslist l)
+slist_drop	_slist/slist.h	/^void slist_drop(pslist);$/;"	p	signature:(pslist)
+slist_empty	_slist/slist.h	53;"	d
+slist_init	_slist/slist.h	36;"	d
+slist_remove	_slist/slist.c	/^int slist_remove(pslist l,void* data, int len)$/;"	f	signature:(pslist l,void* data, int len)
+slist_remove	_slist/slist.h	/^int slist_remove(pslist, void*, int);$/;"	p	signature:(pslist, void*, int)
+slist_travel	_slist/slist.h	45;"	d
+username	radius.c	/^unsigned char username[20];$/;"	v

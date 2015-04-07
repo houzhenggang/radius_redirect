@@ -84,7 +84,7 @@ char send_ip[30];
 #define error(msg) \
 	{fprintf(stderr, "%s error:%s\n", msg, strerror(errno));exit(-1);}
 /* 黑名单文件 */
-#define BLACK_TABLE "black_table"
+#define BLACK_TABLE "../../config/id.conf"
 
 /* 获取radius数据 */
 void get_radius();
@@ -281,12 +281,8 @@ int send_redirect(char type,char *id,char *ip)
 void msg_server( )
 {
 	int msgqid, i = 0,j = 0;
-	FILE *f = fopen(BLACK_TABLE,"rw");
-	if(f == NULL)
-	{
-		perror("fopen");
-		exit(-1);
-	}
+	struct slist *pos;
+	FILE *f;
 
 	msgqid=msgget(MSGKEY,0777|IPC_CREAT);  /*创建消息队列*/
 	do 
@@ -298,21 +294,39 @@ void msg_server( )
 		{
 			printf("收到控制端的添加黑名单命令\n");
 			printf("将用户:%s加入黑名单\n", id.id);
+			slist_travel(pos, id_list)
+			{
+				struct id_table *id_temp = (struct id_table*)pos->data;
+				if(strcmp(id_temp->id, id.id) == 0)
+				{
+					fprintf(stderr,"ID %s 已存在黑名单中\n", id.id);
+					goto end;
+				}
+			}
 			slist_add_head(id_list, &id, sizeof(id));
 		}
 		else if(msg.o_type == T_REMOVE_ID)
 		{
 			printf("收到控制端的删除黑名单命令\n");
 			printf("将用户%s从黑名单删除\n", id.id);
-			//删除链表数据
-			slist_remove(id_list, &id, sizeof(id));
+			//删除链表数据, 只匹配id
+			slist_travel(pos ,id_list)
+			{
+				struct id_table *id_temp = (struct id_table*)pos->data;
+				if(strcmp(id_temp->id, id.id) == 0)
+					slist_remove(id_list, id_temp, sizeof(*id_temp));
+			}
 			printf("告诉内核删除与%s相关的id到ip的映射关系\n", id.id);
 			//告诉内核删哪个id
 			send_redirect('d', id.id,"NULL");
 		}
 
+end:
+		f = fopen(BLACK_TABLE,"rw+");
+		if(f == NULL)
+			error("fopen");
 		printf("现有黑名单ID:\n");
-		printf("+-----------------+---------------------------+\n");
+		printf("+-----------------+------------------------+\n");
 		struct slist *pos;
 		struct id_table *temp;
 		slist_travel(pos, id_list)
@@ -322,7 +336,8 @@ void msg_server( )
 			fprintf(f,"%s\n", temp->id);
 			fflush(f);
 		}
-		printf("+----------------+----------------------------+\n");
+		printf("+----------------+-------------------------+\n");
+		fclose(f);
 
 	}while(1);
 
@@ -369,9 +384,9 @@ int main (int argc, const char * argv[])
 	}
 
 	fclose(black);
-
 	printf("根据记录，当前黑名单列表如下\n");
 	printf("+-----------------------------------+\n");
+	
 	struct slist *pos;
 	slist_travel(pos,id_list)
 	{

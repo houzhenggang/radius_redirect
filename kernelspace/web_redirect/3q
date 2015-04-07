@@ -1,7 +1,7 @@
 /*
-  * 
-  * 
-  *		
+  * Web -- a simple web redirect module
+  * Authors
+  *		jxq19881013@gmail.com
   */
 
 #include <linux/list.h>
@@ -227,7 +227,7 @@ struct black_ip_table
 
 void add_ip(struct ipContent ipcnt)
 {
-	int i = 0;	
+	
 	printk("将要添加ID为%s IP为:%s的过滤信息\n", ipcnt.id, ipcnt.ip);
 	
 	//不添加重复信息
@@ -256,7 +256,6 @@ void remove_ip(struct ipContent ipcnt)
 			for(j = i;j<ips.num-1;j++)
 				ips.ips[j] = ips.ips[j+1];
 			ips.num--;
-			i--;
 		}
 	}
 }
