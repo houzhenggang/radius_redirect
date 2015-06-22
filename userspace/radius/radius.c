@@ -19,7 +19,7 @@
 #include <netinet/if_ether.h>
 #include <net/if.h>
 #include <sys/ioctl.h>
-
+#include <fcntl.h>
 #include <sys/msg.h>
 #include <sys/ipc.h>
 #include <sys/socket.h>
@@ -77,7 +77,8 @@ char *buff = NULL;
 /* 读取到的用户名 */
 unsigned char username[20];
 /* 黑名单ID表*/
-struct slist *id_list;
+struct id_table g_id_list[2000];
+int g_cur_len = 0;
 /* 要发给内核重定向程序的黑名单ID对应的IP*/
 char send_ip[30];
 /* 错误信息 */
@@ -177,12 +178,10 @@ void parse_radius()
  * */
 int is_black_table(void)
 {
-	int i = 0; 
-	struct slist *pos;
-	slist_travel(pos,id_list)	
+	int i = 0;
+	for(i = 0;i<g_cur_len;i++)
 	{
-		struct id_table *temp = (struct id_table*)(pos->data);
-		if(strcmp(username, temp->id) == 0)
+		if(strcmp(username, g_id_list[i].id) == 0)
 			return 1;
 	}
 	return 0;
@@ -282,8 +281,29 @@ void msg_server( )
 {
 	int msgqid, i = 0,j = 0;
 	struct slist *pos;
-	FILE *f;
+	FILE *f,*black;
+	int t;
+	int fd;
+	int cur_len = 0;
+	struct id_table id_list[2000];
+	char wbuff[31];
+	//打开黑名单文件
+	black = fopen(BLACK_TABLE, "r");
+	if(black == NULL)
+		error("open blacktable");
+	//读取黑名单文件
+	while(fscanf(black, "%s",id.id) != EOF)
+	{
+		strcpy(id_list[cur_len++].id, id.id);
+	}
 
+	fclose(black);
+	printf("根据记录，当前黑名单列表如下\n");
+	printf("+-----------------------------------+\n");
+	
+	for(i = 0;i<cur_len;i++)
+		printf("ID:%s\n", id_list[i].id);
+	printf("+----------------------------------+\n");
 	msgqid=msgget(MSGKEY,0777|IPC_CREAT);  /*创建消息队列*/
 	do 
         {
@@ -294,50 +314,43 @@ void msg_server( )
 		{
 			printf("收到控制端的添加黑名单命令\n");
 			printf("将用户:%s加入黑名单\n", id.id);
-			slist_travel(pos, id_list)
-			{
-				struct id_table *id_temp = (struct id_table*)pos->data;
-				if(strcmp(id_temp->id, id.id) == 0)
-				{
-					fprintf(stderr,"ID %s 已存在黑名单中\n", id.id);
-					goto end;
-				}
-			}
-			slist_add_head(id_list, &id, sizeof(id));
+			strcpy(id_list[cur_len++].id, id.id);
 		}
 		else if(msg.o_type == T_REMOVE_ID)
 		{
 			printf("收到控制端的删除黑名单命令\n");
 			printf("将用户%s从黑名单删除\n", id.id);
 			//删除链表数据, 只匹配id
-			slist_travel(pos ,id_list)
+			t = cur_len;
+			for(i = 0;i<t;i++)
 			{
-				struct id_table *id_temp = (struct id_table*)pos->data;
-				if(strcmp(id_temp->id, id.id) == 0)
-					slist_remove(id_list, id_temp, sizeof(*id_temp));
+				if(strcmp(id_list[i].id, id.id) == 0)
+				{
+					for(j = i;j<cur_len-1;j++)
+						strcpy(id_list[j].id, id_list[j+1].id);			
+					cur_len--;
+				}
 			}
-			printf("告诉内核删除与%s相关的id到ip的映射关系\n", id.id);
 			//告诉内核删哪个id
 			send_redirect('d', id.id,"NULL");
 		}
 
-end:
-		f = fopen(BLACK_TABLE,"rw+");
-		if(f == NULL)
-			error("fopen");
 		printf("现有黑名单ID:\n");
 		printf("+-----------------+------------------------+\n");
-		struct slist *pos;
-		struct id_table *temp;
-		slist_travel(pos, id_list)
+		fd = open(BLACK_TABLE,O_RDWR|O_TRUNC,0);
+		if(fd<0)
+			error("open");
+		printf("cur_len:%d\n", cur_len);
+		for(i = 0;i<cur_len; i++)
 		{
-			temp = (struct id_table*)(pos->data);
-			printf("ID:%s\n",temp->id );
-			fprintf(f,"%s\n", temp->id);
-			fflush(f);
+			printf("ID:%s\n", id_list[i].id);
+			sprintf(wbuff,"%s\n", id_list[i].id);
+			write(fd, wbuff, strlen(wbuff));
 		}
+		close(fd);
+		memcpy(g_id_list,id_list, sizeof(id_list));
+		g_cur_len = cur_len;
 		printf("+----------------+-------------------------+\n");
-		fclose(f);
 
 	}while(1);
 
@@ -361,11 +374,7 @@ int main (int argc, const char * argv[])
 	}
 
 	int i = 0,j = 0, count = 0, ret = 0;
-	//黑名单文件
-	FILE *black = NULL;
 	
-	//初始化黑名单id表
-	slist_init(id_list);
 	//消息队列线程，负责接收配置数据
 	pthread_t recv_thread;
 	if(pthread_create(&recv_thread, NULL, msg_server, NULL) <0)
@@ -373,32 +382,12 @@ int main (int argc, const char * argv[])
 		perror("pthread_create");
 		exit(-1);
 	}
-	//打开黑名单文件
-	black = fopen(BLACK_TABLE, "rw");
-	if(black == NULL)
-		error("open blacktable");
-	//读取黑名单文件
-	while(fscanf(black, "%s",id.id) != EOF)
-	{
-		slist_add_head(id_list, &id, sizeof(id));
-	}
-
-	fclose(black);
-	printf("根据记录，当前黑名单列表如下\n");
-	printf("+-----------------------------------+\n");
 	
-	struct slist *pos;
-	slist_travel(pos,id_list)
-	{
-		struct id_table *temp = (struct id_table*)(pos->data);
-		printf("%s\n", temp->id);
-	}
-	printf("+----------------------------------+\n");
 
 	int sockfd;
 	struct ethhdr *eth;
 	struct iphdr *ip;
-	struct tcphdr *tcp;
+	struct udphdr *udp;
 	if(0>(sockfd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL))))
 	{
 		perror("socket");
@@ -431,22 +420,20 @@ int main (int argc, const char * argv[])
 		if(type == ETH_P_IP)
 		{
 			ip = (struct iphdr*)(buff + sizeof(struct ethhdr));
-			//tcp协议
-			if(ip->protocol == 6)
+			//udp协议
+			if(ip->protocol == 17)
 			{
-				tcp = (struct tcphdr*)(buff + sizeof(struct iphdr) + sizeof(struct ethhdr));
+				udp = (struct udphdr*)(buff + sizeof(struct iphdr) + sizeof(struct ethhdr));
 				//radius协议,从1812端口发过来，1813号端口接收
-				if( (ntohs(tcp->dest)) == 1813 && ntohs(tcp->source)==1812 )
+				if( (ntohs(udp->dest)) == 1813 && ntohs(udp->source)==1812 )
 				{
 					get_radius();
 					if(radius_head->code != 4)
 						continue;
 					parse_radius();
-					fprintf(stdout, "username:%s ", username);
+//					fprintf(stdout, "id:%s ip:%s\n", username, send_ip);
 					if(is_black_table())
 					{
-						fprintf(stdout, "黑名单,发送IP：%s 给重定向程序\n",send_ip);
-						fprintf(stdout,"发送IP部分采用netlink方法\n");
 						if(send_redirect('a', username, send_ip))
 						{
 							fprintf(stdout,"发送给内核重定向程序\n");
@@ -454,14 +441,8 @@ int main (int argc, const char * argv[])
 						else
 							fprintf(stderr,"发送失败\n");
 					}
-					else
-						fprintf(stdout, "不是黑名单\n");
 				}
-				printf("是tcp协议，来个端口测试抓包是否正确:source:%d\n", ntohs(tcp->source));
 			}
-			struct in_addr add;
-			add.s_addr = ip->saddr;
-			printf("不是tcp协议，来个ip测试抓包是否正确:IP:%s\n", inet_ntoa(add));
 		}
 		
 	}

@@ -1,1 +1,0 @@
-cmd_/home/hadoop/submit/kernelspace/webredirect.ko := ld -r -m elf_i386 -T /usr/src/linux-headers-3.11.0-15-generic/scripts/module-common.lds --build-id  -o /home/hadoop/submit/kernelspace/webredirect.ko /home/hadoop/submit/kernelspace/webredirect.o /home/hadoop/submit/kernelspace/webredirect.mod.o

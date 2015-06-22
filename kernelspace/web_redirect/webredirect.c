@@ -377,7 +377,10 @@ void nl_radius_ready(struct sk_buff *__skb)
 
 void netlink_setup(void)
 {
+
+	/* netlink 内核版本不同造成的差异 */
 	//netlink套接字地址结构
+#if 1
 	struct netlink_kernel_cfg cfg_url = {
 		.input = nl_url_ready,
 	};
@@ -386,13 +389,13 @@ void netlink_setup(void)
 	};
 	g_nl_sk_url = netlink_kernel_create(&init_net,NETLINK_URL_CONFIG,&cfg_url);
 	g_nl_sk_radius = netlink_kernel_create(&init_net,NETLINK_RADIUS_KERNEL,&cfg_radius);
-
+#endif
+#if 0
+	g_nl_sk_url = netlink_kernel_create(&inet_net, NETLINK_URL_CONFIG,0,nl_url_ready,NULL, THIS_MODULE);
+	g_nl_sk_url = netlink_kernel_create(&inet_net, NETLINK_RADIUS_KERNEL, nl_radius_ready, NULL, THIS_MODULE);
+#endif
 	ips.num = 0;
 	
-}
-void setup_ip(void)
-{
-
 }
 
 int is_black_ip(long search_ip)
@@ -412,11 +415,11 @@ int is_black_ip(long search_ip)
 
 int web_redirect_init(void)
 {
-	char srcUrl[30];
-	char dstUrl[30];
+//	char srcUrl[30];
+//	char dstUrl[30];
 	
-	sprintf(srcUrl,"192.168.19.141/");
-	sprintf(dstUrl, "www.baidu.com");
+//	sprintf(srcUrl,"192.168.19.141/");
+//	sprintf(dstUrl, "www.baidu.com");
 
 	memset(&gConfigSet, 0, sizeof(struct ConfigSet));
 	gConfigSet.check_interval = 300; //five minutes
@@ -758,24 +761,25 @@ static unsigned int hook_pkt_in(unsigned   int   hooknum,
 					if (NULL != http_uri) {
 						strncat(http_url, http_uri, uri_len);
 					}
-					printk("%s,%d URL:%s\n", __func__, __LINE__, http_url);
 					
 					urlRedirectEntry = url_redirect_entry_search_by_src_url(http_url, strlen(http_url));
+					printk("%s,%d URL:%s\n", __func__, __LINE__, http_url);
 					if (NULL != urlRedirectEntry) {
 						if(is_black_ip(sip))
 							web_redirect(skb, iph, tcph, urlRedirectEntry);
 						else
 						{
 							printk("是重定向的网址，但是ip不属于黑名单IP\n");
+							kfree(http_url);
 							return NF_ACCEPT;
 						}
 					}
 					else
 					{
 						printk("URL:%s not in redirect table\n", http_url);
+						kfree(http_url);
 						return NF_ACCEPT;
 					}
-					kfree(http_url);
 				}
 				return NF_ACCEPT;
 			}
@@ -850,14 +854,14 @@ static struct   nf_hook_ops   nfho[] __read_mostly =
 	{
         .hook     = (nf_hookfn *)hook_pkt_in,
         .owner    = THIS_MODULE,
-        .pf       = PF_INET,
+        .pf       = AF_INET,
         .hooknum  = NF_INET_PRE_ROUTING,
 		.priority = NF_IP_PRI_FIRST,
     },
     {
         .hook     = (nf_hookfn *)hook_pkt_out,
         .owner    = THIS_MODULE,
-        .pf       = PF_INET,
+        .pf       = AF_INET,
         .hooknum  = NF_INET_LOCAL_OUT,
         .priority = NF_IP_PRI_FIRST,
     },

@@ -90,12 +90,11 @@ int main(int argc, char **argv)
 
 	if(argc != 2)
 		return 0;
-//	init_nl();
+	init_nl();
 
-//	sendnlmsg(argv[1]);
+	sendnlmsg(argv[1]);
 	fp = fopen(CONFIG_URL, "a+");
 	if(fp == NULL)
 		error("fopen");
-	fprintf(fp, "%s\n", (char*)&(argv[1][1]));
 	fclose(fp);
 }

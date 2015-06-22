@@ -1,0 +1,4 @@
+0000000000000000000000000000000000000000 4de849fb460f8e98c2cc6f3f5ca02be369de32da hadoop <hadoop@ICKelin.(none)> 1428028619 +0800	commit (initial): 提交可以进行重定向的程序，下一步要做用netlink进行用户空间与内核空间通信的功能
+4de849fb460f8e98c2cc6f3f5ca02be369de32da 7b81adaefa181ac9dabdf9ff805d0cf23ac126e1 hadoop <hadoop@ICKelin.(none)> 1428117460 +0800	commit: 提交保存radius Makefile
+7b81adaefa181ac9dabdf9ff805d0cf23ac126e1 11759efee9d46f7e83dcbb0575560417dabf1ae6 hadoop <hadoop@ICKelin.(none)> 1428216072 +0800	commit: 提交版本,内核采用链表存储IP，存在bug:重新启动内核模块时出错
+11759efee9d46f7e83dcbb0575560417dabf1ae6 39ab9db8bfe947b5e04e32348b4a0b72d23e743d hadoop <hadoop@ICKelin.(none)> 1428218229 +0800	commit: 提交数组版本,根链表原因一样

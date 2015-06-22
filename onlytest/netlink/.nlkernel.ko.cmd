@@ -1,1 +1,0 @@
-cmd_/home/hadoop/submit/onlytest/netlink/nlkernel.ko := ld -r -m elf_i386 -T /usr/src/linux-headers-3.11.0-15-generic/scripts/module-common.lds --build-id  -o /home/hadoop/submit/onlytest/netlink/nlkernel.ko /home/hadoop/submit/onlytest/netlink/nlkernel.o /home/hadoop/submit/onlytest/netlink/nlkernel.mod.o
